@@ -1,11 +1,19 @@
+DECLARE
+CURSOR prod_cursor IS
+SELECT pid, price FROM product WHERE price < 5000;
+v_pid product.pid%TYPE;
+v_price product.price%TYPE;
 BEGIN
-for rec IN (select pid, price from product where price < 5000)
-LOOP
-update product
-SET price = rec.price * 1.10 where pid = rec.pid;
+OPEN prod_cursor;
+LOOP 
+FETCH prod_cursor INTO v_pid, v_price;
+ EXIT WHEN prod_cursor%NOTFOUND;
+UPDATE product 
+SET price= v_price* 1.10 
+WHERE pid= v_pid; 
 END LOOP;
-
-commit;
+CLOSE prod_cursor;
+COMMIT;
 DBMS_OUTPUT.PUT_LINE('Prices updated.');
 END;
 /
