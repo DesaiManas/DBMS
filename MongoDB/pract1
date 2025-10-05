@@ -1,0 +1,105 @@
+show dbs;
+admin   40.00 KiB
+config  60.00 KiB
+local   64.00 KiB
+use college;
+switched to db college
+show dbs;
+admin   40.00 KiB
+config  60.00 KiB
+local   64.00 KiB
+db.stud.insertOne({'rollno':101,'name':'manas','class':'TE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e2736bb1f1cbbb991d24ab')
+}
+db.stud.insertOne({'rollno':102,'name':'ketan','class':'TE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e2737eb1f1cbbb991d24ac')
+}
+db.stud.insertOne({'rollno':103,'name':'swapnil','class':'TE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e2738fb1f1cbbb991d24ad')
+}
+db.stud.insertOne({'rollno':104,'name':'amol','class':'TE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e27398b1f1cbbb991d24ae')
+}
+db.stud.insertOne({'rollno':105,'name':'jayesh','class':'TE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e2739fb1f1cbbb991d24af')
+}
+db.stud.find();
+{
+  _id: ObjectId('68e2736bb1f1cbbb991d24ab'),
+  rollno: 101,
+  name: 'manas',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2737eb1f1cbbb991d24ac'),
+  rollno: 102,
+  name: 'ketan',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2738fb1f1cbbb991d24ad'),
+  rollno: 103,
+  name: 'swapnil',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e27398b1f1cbbb991d24ae'),
+  rollno: 104,
+  name: 'amol',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2739fb1f1cbbb991d24af'),
+  rollno: 105,
+  name: 'jayesh',
+  class: 'TE'
+}
+db.stud.updateOne({rollno:105},{$set:{name:'karan'}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.stud.find();
+{
+  _id: ObjectId('68e2736bb1f1cbbb991d24ab'),
+  rollno: 101,
+  name: 'manas',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2737eb1f1cbbb991d24ac'),
+  rollno: 102,
+  name: 'ketan',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2738fb1f1cbbb991d24ad'),
+  rollno: 103,
+  name: 'swapnil',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e27398b1f1cbbb991d24ae'),
+  rollno: 104,
+  name: 'amol',
+  class: 'TE'
+}
+{
+  _id: ObjectId('68e2739fb1f1cbbb991d24af'),
+  rollno: 105,
+  name: 'karan',
+  class: 'TE'
+}
