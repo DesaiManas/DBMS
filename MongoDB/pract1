@@ -1,70 +1,52 @@
-show dbs;
-admin   40.00 KiB
-config  60.00 KiB
-local   64.00 KiB
-use college;
+
+test> show dbs;
+admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+test> show dbs;
+admin     40.00 KiB
+college    8.00 KiB
+config   108.00 KiB
+local     40.00 KiB
+test> use college;
 switched to db college
-show dbs;
-admin   40.00 KiB
-config  60.00 KiB
-local   64.00 KiB
-db.stud.insertOne({'rollno':101,'name':'manas','class':'TE'});
+college> db.stud.insert({'rollno':101,'name':'manas','class':'TE'});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
 {
   acknowledged: true,
-  insertedId: ObjectId('68e2736bb1f1cbbb991d24ab')
+  insertedIds: { '0': ObjectId('68d41f9eb6e5aaea89cebea4') }
 }
-db.stud.insertOne({'rollno':102,'name':'ketan','class':'TE'});
+college> db.stud.find();
+[
+  {
+    _id: ObjectId('68d41f9eb6e5aaea89cebea4'),
+    rollno: 101,
+    name: 'manas',
+    class: 'TE'
+  }
+]
+college> db.stud.insert({'rollno':102,name:'jay',dept:'cs'});
 {
   acknowledged: true,
-  insertedId: ObjectId('68e2737eb1f1cbbb991d24ac')
+  insertedIds: { '0': ObjectId('68d41ff7b6e5aaea89cebea5') }
 }
-db.stud.insertOne({'rollno':103,'name':'swapnil','class':'TE'});
-{
-  acknowledged: true,
-  insertedId: ObjectId('68e2738fb1f1cbbb991d24ad')
-}
-db.stud.insertOne({'rollno':104,'name':'amol','class':'TE'});
-{
-  acknowledged: true,
-  insertedId: ObjectId('68e27398b1f1cbbb991d24ae')
-}
-db.stud.insertOne({'rollno':105,'name':'jayesh','class':'TE'});
-{
-  acknowledged: true,
-  insertedId: ObjectId('68e2739fb1f1cbbb991d24af')
-}
-db.stud.find();
-{
-  _id: ObjectId('68e2736bb1f1cbbb991d24ab'),
-  rollno: 101,
-  name: 'manas',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2737eb1f1cbbb991d24ac'),
-  rollno: 102,
-  name: 'ketan',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2738fb1f1cbbb991d24ad'),
-  rollno: 103,
-  name: 'swapnil',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e27398b1f1cbbb991d24ae'),
-  rollno: 104,
-  name: 'amol',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2739fb1f1cbbb991d24af'),
-  rollno: 105,
-  name: 'jayesh',
-  class: 'TE'
-}
-db.stud.updateOne({rollno:105},{$set:{name:'karan'}});
+college> db.stud.find();
+[
+  {
+    _id: ObjectId('68d41f9eb6e5aaea89cebea4'),
+    rollno: 101,
+    name: 'manas',
+    class: 'TE'
+  },
+  {
+    _id: ObjectId('68d41ff7b6e5aaea89cebea5'),
+    rollno: 102,
+    name: 'jay',
+    dept: 'cs'
+  }
+]
+college> db.stud.update({rollno:102},{$set:{name:'amol'}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
 {
   acknowledged: true,
   insertedId: null,
@@ -72,34 +54,19 @@ db.stud.updateOne({rollno:105},{$set:{name:'karan'}});
   modifiedCount: 1,
   upsertedCount: 0
 }
-db.stud.find();
-{
-  _id: ObjectId('68e2736bb1f1cbbb991d24ab'),
-  rollno: 101,
-  name: 'manas',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2737eb1f1cbbb991d24ac'),
-  rollno: 102,
-  name: 'ketan',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2738fb1f1cbbb991d24ad'),
-  rollno: 103,
-  name: 'swapnil',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e27398b1f1cbbb991d24ae'),
-  rollno: 104,
-  name: 'amol',
-  class: 'TE'
-}
-{
-  _id: ObjectId('68e2739fb1f1cbbb991d24af'),
-  rollno: 105,
-  name: 'karan',
-  class: 'TE'
-}
+college> db.stud.find();
+[
+  {
+    _id: ObjectId('68d41f9eb6e5aaea89cebea4'),
+    rollno: 101,
+    name: 'prajakta',
+    class: 'TE'
+  },
+  {
+    _id: ObjectId('68d41ff7b6e5aaea89cebea5'),
+    rollno: 102,
+    name: 'amol',
+    dept: 'cs'
+  }
+]
+college>
