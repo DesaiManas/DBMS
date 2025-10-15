@@ -1,0 +1,245 @@
+Microsoft Windows [Version 10.0.19045.6332]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68e631d2130357e7ddcebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.0
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-26T10:01:29.579+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs;
+Demo          68.00 KiB
+admin         48.00 KiB
+aggregate      8.00 KiB
+bank          80.00 KiB
+company        8.00 KiB
+config        72.00 KiB
+demoexample   68.00 KiB
+ja             8.00 KiB
+james         72.00 KiB
+local         72.00 KiB
+query         32.00 KiB
+school       200.00 KiB
+test         136.00 KiB
+test> use Demo1;
+switched to db Demo1
+Demo1> db.createCollection('employee');
+{ ok: 1 }
+Demo1> db.employee.insertOne({id:101,name:'Manas',salary:100000,dept:'IT'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e63255130357e7ddcebea4')
+}
+Demo1> db.employee.insertOne({id:102,name:'Amol',salary:80000,dept:'IT'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e6326b130357e7ddcebea5')
+}
+Demo1> db.employee.insertOne({id:103,name:'Swapnil',salary:87000,dept:'CS'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e6327e130357e7ddcebea6')
+}
+Demo1> db.employee.insertOne({id:104,name:'Jayesh',salary:90000,dept:'CS'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e6328d130357e7ddcebea7')
+}
+Demo1> db.employee.insertOne({id:105,name:'Karan',salary:70000,dept:'HR'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e632a4130357e7ddcebea8')
+}
+Demo1> db.employee.insertOne({id:106,name:'Jay',salary:76000,dept:'HR'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68e632b8130357e7ddcebea9')
+}
+Demo1> db.employee.aggregate([{$group:{_id:null, TotalSal:{$Sum:'$salary'}}}]);
+MongoServerError[Location15952]: unknown group operator '$Sum'
+Demo1> db.employee.aggregate([{$group:{_id:null, TotalSal:{$sum:'$salary'}}}]);
+[ { _id: null, TotalSal: 503000 } ]
+Demo1> db.employee.aggregate([{$group:{_id:'$dept', TotalSal:{$sum:'$salary'}}}]);
+[
+  { _id: 'CS', TotalSal: 177000 },
+  { _id: 'IT', TotalSal: 180000 },
+  { _id: 'HR', TotalSal: 146000 }
+]
+Demo1> db.employee.aggregate([{$group:{_id:null, MinSal:{$min:'$salary'}}}]);
+[ { _id: null, MinSal: 70000 } ]
+Demo1> db.employee.aggregate([{$group:{_id:'$dept', MinSal:{$min:'$salary'}}}]);
+[
+  { _id: 'HR', MinSal: 70000 },
+  { _id: 'IT', MinSal: 80000 },
+  { _id: 'CS', MinSal: 87000 }
+]
+Demo1> db.employee.aggregate([{$group:{_id:null, MaxSal:{$max:'$salary'}}}]);
+[ { _id: null, MaxSal: 100000 } ]
+Demo1> db.employee.aggregate([{$group:{_id:'$dept', MaxSal:{$max:'$salary'}}}]);
+[
+  { _id: 'CS', MaxSal: 90000 },
+  { _id: 'IT', MaxSal: 100000 },
+  { _id: 'HR', MaxSal: 76000 }
+]
+Demo1> db.employee.aggregate([{$group:{_id:null, MaxSal:{$avg:'$salary'}}}]);
+[ { _id: null, MaxSal: 83833.33333333333 } ]
+Demo1> db.employee.aggregate([{$group:{_id:'$dept', AvgSal:{$avg:'$salary'}}}]);
+[
+  { _id: 'HR', AvgSal: 73000 },
+  { _id: 'IT', AvgSal: 90000 },
+  { _id: 'CS', AvgSal: 88500 }
+]
+Demo1> db.employee.aggregate([{$group:{_id:null, Addtoset:{$addToSet:'$salary'}}}]);
+[
+  {
+    _id: null,
+    Addtoset: [ 90000, 87000, 100000, 80000, 70000, 76000 ]
+  }
+]
+Demo1> db.employee.aggregate([{$group:{_id:null, Push:{$push:'$salary'}}}]);
+[ { _id: null, Push: [ 100000, 80000, 87000, 90000, 70000, 76000 ] } ]
+Demo1> db.employee.aggregate([{$group:{_id:null, ASorted:{$sort:'$salary'}}}]);
+MongoServerError[Location15952]: unknown group operator '$sort'
+Demo1> db.employee.find().sort({name:1});
+[
+  {
+    _id: ObjectId('68e6326b130357e7ddcebea5'),
+    id: 102,
+    name: 'Amol',
+    salary: 80000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68e632b8130357e7ddcebea9'),
+    id: 106,
+    name: 'Jay',
+    salary: 76000,
+    dept: 'HR'
+  },
+  {
+    _id: ObjectId('68e6328d130357e7ddcebea7'),
+    id: 104,
+    name: 'Jayesh',
+    salary: 90000,
+    dept: 'CS'
+  },
+  {
+    _id: ObjectId('68e632a4130357e7ddcebea8'),
+    id: 105,
+    name: 'Karan',
+    salary: 70000,
+    dept: 'HR'
+  },
+  {
+    _id: ObjectId('68e63255130357e7ddcebea4'),
+    id: 101,
+    name: 'Manas',
+    salary: 100000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68e6327e130357e7ddcebea6'),
+    id: 103,
+    name: 'Swapnil',
+    salary: 87000,
+    dept: 'CS'
+  }
+]
+Demo1> db.employee.find().sort({salary:1});
+[
+  {
+    _id: ObjectId('68e632a4130357e7ddcebea8'),
+    id: 105,
+    name: 'Karan',
+    salary: 70000,
+    dept: 'HR'
+  },
+  {
+    _id: ObjectId('68e632b8130357e7ddcebea9'),
+    id: 106,
+    name: 'Jay',
+    salary: 76000,
+    dept: 'HR'
+  },
+  {
+    _id: ObjectId('68e6326b130357e7ddcebea5'),
+    id: 102,
+    name: 'Amol',
+    salary: 80000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68e6327e130357e7ddcebea6'),
+    id: 103,
+    name: 'Swapnil',
+    salary: 87000,
+    dept: 'CS'
+  },
+  {
+    _id: ObjectId('68e6328d130357e7ddcebea7'),
+    id: 104,
+    name: 'Jayesh',
+    salary: 90000,
+    dept: 'CS'
+  },
+  {
+    _id: ObjectId('68e63255130357e7ddcebea4'),
+    id: 101,
+    name: 'Manas',
+    salary: 100000,
+    dept: 'IT'
+  }
+]
+Demo1> db.employee.find().sort({salary:-1});
+[
+  {
+    _id: ObjectId('68e63255130357e7ddcebea4'),
+    id: 101,
+    name: 'Manas',
+    salary: 100000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68e6328d130357e7ddcebea7'),
+    id: 104,
+    name: 'Jayesh',
+    salary: 90000,
+    dept: 'CS'
+  },
+  {
+    _id: ObjectId('68e6327e130357e7ddcebea6'),
+    id: 103,
+    name: 'Swapnil',
+    salary: 87000,
+    dept: 'CS'
+  },
+  {
+    _id: ObjectId('68e6326b130357e7ddcebea5'),
+    id: 102,
+    name: 'Amol',
+    salary: 80000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68e632b8130357e7ddcebea9'),
+    id: 106,
+    name: 'Jay',
+    salary: 76000,
+    dept: 'HR'
+  },
+  {
+    _id: ObjectId('68e632a4130357e7ddcebea8'),
+    id: 105,
+    name: 'Karan',
+    salary: 70000,
+    dept: 'HR'
+  }
+]
+Demo1>
