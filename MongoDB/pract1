@@ -59,7 +59,7 @@ college> db.stud.find();
   {
     _id: ObjectId('68d41f9eb6e5aaea89cebea4'),
     rollno: 101,
-    name: 'prajakta',
+    name: 'manas',
     class: 'TE'
   },
   {
